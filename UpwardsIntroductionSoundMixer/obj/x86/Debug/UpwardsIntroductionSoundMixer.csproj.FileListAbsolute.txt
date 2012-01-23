@@ -1,0 +1,15 @@
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\bin\Debug\UpwardsIntroductionSoundMixer.exe
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\bin\Debug\UpwardsIntroductionSoundMixer.pdb
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\MainWindow.g.cs
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\App.g.cs
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer_MarkupCompile.cache
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer_MarkupCompile.lref
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\MainWindow.baml
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer.g.resources
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer.Properties.Resources.resources
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer.exe
+C:\Users\olerza\Documents\Visual Studio 2010\Projects\UpwardsIntroductionSoundMixer\UpwardsIntroductionSoundMixer\obj\x86\Debug\UpwardsIntroductionSoundMixer.pdb
