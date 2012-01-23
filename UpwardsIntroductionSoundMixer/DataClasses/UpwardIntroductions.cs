@@ -34,31 +34,23 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
         public List<IntroductionMusic> IntroductionMusics { get; set; }
 
         /// <summary>
-        /// Creates the fake data.
+        /// Gets or sets the queue.
+        /// </summary>
+        /// <value>
+        /// The queue.
+        /// </value>
+        public List<Tuple<TeamIntroduction, IntroductionMusic>> Queue { get; set; }
+
+        /// <summary>
+        /// Loads the upward intros.
         /// </summary>
         /// <returns></returns>
-        public static UpwardIntroductions CreateFakeData()
-        {
-            UpwardIntroductions upIntros = new UpwardIntroductions();
-
-            upIntros.TeamIntroductions = new List<TeamIntroduction>();
-            upIntros.TeamIntroductions.Add(new TeamIntroduction() { Coach = "Zac Oler", TeamName = "Pengins", FilePath = @"C:\Users\olerza\Downloads\mp3Samples\m1.m4a", Name = "Penguins" });
-            upIntros.TeamIntroductions.Add(new TeamIntroduction() { Coach = "Becky Oler", TeamName = "Dazzlers", FilePath = @"C:\Users\olerza\Downloads\mp3Samples\m2.mp3", Name = "Dazzlers" });
-            upIntros.TeamIntroductions.Add(new TeamIntroduction() { Coach = "Kyle Stark", TeamName = "Singers", FilePath = @"C:\Users\olerza\Downloads\mp3Samples\m3.mp3", Name = "Singers" });
-
-            upIntros.IntroductionMusics = new List<IntroductionMusic>();
-            upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = @"C:\Users\olerza\Downloads\mp3Samples\Fingerpicking3.mp3", Name = "Finger Picking 3" });
-            upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = @"C:\Users\olerza\Downloads\mp3Samples\Fingerpicking4.mp3", Name = "Finger Picking 4" });
-            upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = @"C:\Users\olerza\Downloads\mp3Samples\Fingerpicking5.mp3", Name = "Finger Picking 5" });
-
-            return upIntros;
-        }
-
         public static UpwardIntroductions LoadUpwardIntros()
         {
             UpwardIntroductions upIntros = new UpwardIntroductions();
             upIntros.TeamIntroductions = new List<TeamIntroduction>();
             upIntros.IntroductionMusics = new List<IntroductionMusic>();
+            upIntros.Queue = new List<Tuple<TeamIntroduction, IntroductionMusic>>();
 
             string[] teams = Directory.GetFiles("c:\\upwardintros\\teams\\");
             teams = teams.OrderBy(t => t.ToString()).ToArray();
@@ -78,6 +70,14 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
             }
 
             return upIntros;
+        }
+
+        public void CreateFakeQueue()
+        {
+            this.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(this.TeamIntroductions[0], this.IntroductionMusics[0]));
+            this.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(this.TeamIntroductions[1], this.IntroductionMusics[1]));
+            this.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(this.TeamIntroductions[2], this.IntroductionMusics[2]));
+            this.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(this.TeamIntroductions[3], this.IntroductionMusics[0]));
         }
     }
 }

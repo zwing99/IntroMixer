@@ -24,15 +24,20 @@ namespace UpwardsIntroductionSoundMixer
     public partial class MainWindow : Window
     {
         private DispatcherTimer timer;
+        private UpwardIntroductions upIntros;
+        private bool isPlaying;
+        int playingItem = 0;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = UpwardIntroductions.LoadUpwardIntros();
-            //UpwardIntroductions test = UpwardIntroductions.LoadUpwardIntros();
-            //IntrosMedia.SourceUpdated += new EventHandler<DataTransferEventArgs>(IntrosMedia_SourceUpdated);
+            upIntros = UpwardIntroductions.LoadUpwardIntros();
+            //upIntros.CreateFakeQueue();
+            this.DataContext = upIntros;
             Teams.Items.Filter = FilterTeams;
             Intros.Items.Filter = FilterIntros;
+            isPlaying = false;
         }
 
         private bool FilterTeams(object item)
@@ -59,102 +64,90 @@ namespace UpwardsIntroductionSoundMixer
             return false;
         }
 
-        void IntrosMedia_SourceUpdated(object sender, DataTransferEventArgs e)
+        private void PlayStopButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Console.WriteLine("foo: " + IntrosMedia.Source);
+            if (isPlaying)
+            {
+                this.Stop();
+            }
+            else
+            {
+                if (upIntros.Queue.Count <= 0)
+                    return;
+                playingItem = this.Queue.SelectedIndex;
+                this.Play();
+            }
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void Play()
         {
+
             IntrosMedia.Stop();
             TeamsMedia.Stop();
+            TeamsMedia.Source = new Uri(upIntros.Queue[playingItem].Item1.FilePath);
+            IntrosMedia.Source = new Uri(upIntros.Queue[playingItem].Item2.FilePath);
             IntrosMedia.Play();
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(2);
-            timer.Tick += new EventHandler(DelayStart);
+            timer.Tick += (o, ev) =>
+            {
+                TeamsMedia.Play();
+                timer.Stop();
+            };
             timer.Start();
+            isPlaying = true;
         }
 
-        void DelayStart(object sender, EventArgs e)
+        private void Stop()
         {
-            TeamsMedia.Play();
-            timer.Stop();
-        }
-
-        //private void StopButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    DispatcherTimer timer = new DispatcherTimer();
-        //    timer.Interval = TimeSpan.FromSeconds(2);
-        //    timer.Tick += new EventHandler(timer_Tick);
-        //    timer.Start();
-        //}
-
-        //void timer_Tick(object sender, EventArgs e)
-        //{
-        //    TeamsMedia.Stop();
-        //    IntrosMedia.Stop();
-        //    ((DispatcherTimer)sender).Stop();
-        //}
-
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(timer != null)
+            if (timer != null)
                 timer.Stop();
             TeamsMedia.Stop();
             IntrosMedia.Stop();
-        }
-
-
-        private void Teams_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            TeamsMedia.Stop();
-            IntrosMedia.Stop();
-        }
-
-        private void Intros_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            TeamsMedia.Stop();
-            IntrosMedia.Stop();
+            isPlaying = false;
+            playingItem = 0;
         }
 
         private void TeamsMedia_MediaEnded(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer timer = new DispatcherTimer();
             Storyboard sb = new Storyboard();
-            sb.Completed += (o, ev) =>
-            {
-                //Binding left = new Binding("Value") { Source = Mixer };
-                //left.Converter = (IValueConverter)this.FindResource("MixerConverter");
-                //left.ConverterParameter = "Left";
-                //Binding right = new Binding("Value") { Source = Mixer };
-                //right.Converter = (IValueConverter)this.FindResource("MixerConverter");
-                //right.ConverterParameter = "Right";
-                IntrosMedia.Stop();
-                //IntrosMedia.SetBinding(MediaElement.VolumeProperty, left);
-                //TeamsMedia.SetBinding(MediaElement.VolumeProperty, right);
-                //Mixer.Value = 50;
-            };
-            DoubleAnimation da = new DoubleAnimation(0.0, TimeSpan.FromSeconds(2.0));
+            DoubleAnimation da = new DoubleAnimation(0.0, TimeSpan.FromSeconds(5.0));
             sb.Children.Add(da);
             sb.FillBehavior = FillBehavior.Stop;
             Storyboard.SetTarget(da, IntrosMedia);
             Storyboard.SetTargetProperty(da, new PropertyPath(MediaElement.VolumeProperty));
+            sb.Completed += (o, ev) =>
+            {
+                IntrosMedia.Stop();
+                playingItem += 1;
+                if (playingItem < upIntros.Queue.Count)
+                {
+                    this.Play();
+                }
+                else
+                {
+                    isPlaying = false;
+                }
+            };
             IntrosMedia.BeginStoryboard(sb);
-            //timer.Interval = TimeSpan.FromSeconds(2);
-            //timer.Tick += new EventHandler(DelayStop);
-            //timer.Start();
         }
 
-        void DelayStop(object sender, EventArgs e)
+        private void AddToQueue_Click(object sender, RoutedEventArgs e)
         {
-            IntrosMedia.Stop();
-            ((DispatcherTimer)sender).Stop();
+            this.upIntros.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(Teams.SelectedItem as TeamIntroduction, Intros.SelectedItem as IntroductionMusic));
+            this.Queue.Items.Refresh();
         }
 
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
         {
             Teams.Items.Filter = FilterTeams;
             Intros.Items.Filter = FilterIntros;
+        }
+
+        private void ClearQueue_Click(object sender, RoutedEventArgs e)
+        {
+            this.upIntros.Queue.Clear();
+            this.Queue.Items.Refresh();
         }
     }
 }
