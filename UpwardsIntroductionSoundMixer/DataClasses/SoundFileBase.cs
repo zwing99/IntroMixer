@@ -1,8 +1,9 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SoundFileBase.cs" company="">
-// TODO: Update copyright text.
+﻿// ----------------------------------------------------------------------
+// <copyright file="SoundFileBase.cs" company="Oler Productions">
+//     Copyright © Oler Productions. All right reserved
 // </copyright>
-// -----------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------
 
 namespace UpwardsIntroductionSoundMixer.DataClasses
 {
@@ -12,9 +13,9 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Base for Sound Files
     /// </summary>
-    public class SoundFileBase
+    public abstract class SoundFileBase
     {
         /// <summary>
         /// Gets or sets the name.

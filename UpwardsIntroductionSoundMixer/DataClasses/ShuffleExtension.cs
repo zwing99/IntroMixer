@@ -1,8 +1,9 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Class1.cs" company="">
-// TODO: Update copyright text.
+﻿// ----------------------------------------------------------------------
+// <copyright file="ShuffleExtension.cs" company="Oler Productions">
+//     Copyright © Oler Productions. All right reserved
 // </copyright>
-// -----------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------
 
 namespace UpwardsIntroductionSoundMixer.DataClasses
 {
@@ -12,10 +13,15 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Extension for shuffling lists
     /// </summary>
     public static class ShuffleExtension
     {
+        /// <summary>
+        /// Shuffles the specified list.
+        /// </summary>
+        /// <typeparam name="T">A Generic Type.</typeparam>
+        /// <param name="list">The list.</param>
         public static void Shuffle<T>(this IList<T> list)
         {
             Random rng = new Random();

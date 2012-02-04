@@ -1,8 +1,9 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IntroductionMusic.cs" company="">
-// TODO: Update copyright text.
+﻿// ----------------------------------------------------------------------
+// <copyright file="IntroductionMusic.cs" company="Oler Productions">
+//     Copyright © Oler Productions. All right reserved
 // </copyright>
-// -----------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------
 
 namespace UpwardsIntroductionSoundMixer.DataClasses
 {

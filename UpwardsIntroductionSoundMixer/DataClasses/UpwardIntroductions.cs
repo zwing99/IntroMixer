@@ -1,19 +1,20 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UpwardIntroductions.cs" company="">
-// TODO: Update copyright text.
+﻿// ----------------------------------------------------------------------
+// <copyright file="UpwardIntroductions.cs" company="Oler Productions">
+//     Copyright © Oler Productions. All right reserved
 // </copyright>
-// -----------------------------------------------------------------------
+//
+// ------------------------------------------------------------------------
 
 namespace UpwardsIntroductionSoundMixer.DataClasses
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
-    using System.IO;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Data Sources for Upward Introductions
     /// </summary>
     public class UpwardIntroductions
     {
@@ -52,14 +53,14 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
         /// <summary>
         /// Loads the upward intros.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A The Upward DataSource</returns>
         public static UpwardIntroductions LoadUpwardIntros()
         {
-            UpwardIntroductions upIntros = new UpwardIntroductions();
-            upIntros.TeamIntroductions = new List<TeamIntroduction>();
-            upIntros.IntroductionMusics = new List<IntroductionMusic>();
-            upIntros.OtherMusic = new List<IntroductionMusic>();
-            upIntros.Queue = new List<Tuple<TeamIntroduction, IntroductionMusic>>();
+            UpwardIntroductions upwardIntros = new UpwardIntroductions();
+            upwardIntros.TeamIntroductions = new List<TeamIntroduction>();
+            upwardIntros.IntroductionMusics = new List<IntroductionMusic>();
+            upwardIntros.OtherMusic = new List<IntroductionMusic>();
+            upwardIntros.Queue = new List<Tuple<TeamIntroduction, IntroductionMusic>>();
 
             string[] teams = Directory.GetFiles("c:\\upwardintros\\teams\\");
             teams = teams.OrderBy(t => t.ToString()).ToArray();
@@ -70,7 +71,9 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
                     string name = Path.GetFileNameWithoutExtension(team);
                     string[] splitname = name.Split('-');
                     if (!name.StartsWith("."))
-                        upIntros.TeamIntroductions.Add(new TeamIntroduction() { FilePath = team, TeamName = splitname[0].Trim(), Coach = splitname[1].Trim(), Name = name });
+                    {
+                        upwardIntros.TeamIntroductions.Add(new TeamIntroduction() { FilePath = team, TeamName = splitname[0].Trim(), Coach = splitname[1].Trim(), Name = name });
+                    }
                 }
             }
 
@@ -82,7 +85,9 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
                 {
                     string name = Path.GetFileNameWithoutExtension(music);
                     if (!name.StartsWith("."))
-                        upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                    {
+                        upwardIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                    }
                 }
             }
 
@@ -93,15 +98,20 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
                 {
                     string name = Path.GetFileNameWithoutExtension(music);
                     if (!name.StartsWith("."))
-                        upIntros.OtherMusic.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                    {
+                        upwardIntros.OtherMusic.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                    }
                 }
             }
 
-            upIntros.OtherMusic.Shuffle();
+            upwardIntros.OtherMusic.Shuffle();
 
-            return upIntros;
+            return upwardIntros;
         }
 
+        /// <summary>
+        /// Creates the fake queue.
+        /// </summary>
         public void CreateFakeQueue()
         {
             this.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(this.TeamIntroductions[0], this.IntroductionMusics[0]));
