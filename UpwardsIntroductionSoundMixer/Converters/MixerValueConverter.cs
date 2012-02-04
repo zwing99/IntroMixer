@@ -15,12 +15,12 @@ namespace UpwardsIntroductionSoundMixer.Converters
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class MixerValueConverter : IValueConverter
+    public class MixerValueConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             int returnValue = 0;
-            int valueint = (int)(double)value;
+            int valueint = (int)(double)values[0];
             string param = parameter.ToString();
             if (param == "Right")
             {
@@ -33,10 +33,10 @@ namespace UpwardsIntroductionSoundMixer.Converters
                 else returnValue = 200 - valueint;
             }
 
-            return returnValue / 100.0;
+            return (returnValue / 100.0)*((double)values[1]);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }

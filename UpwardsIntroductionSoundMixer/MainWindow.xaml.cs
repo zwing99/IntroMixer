@@ -24,20 +24,28 @@ namespace UpwardsIntroductionSoundMixer
     public partial class MainWindow : Window
     {
         private DispatcherTimer timer;
+        private DispatcherTimer timer2;
         private UpwardIntroductions upIntros;
         private bool isPlaying;
         int playingItem = 0;
+        int otherMusicPlayingItem = 0;
+        bool otherMusicPlaying;
 
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             upIntros = UpwardIntroductions.LoadUpwardIntros();
             //upIntros.CreateFakeQueue();
             this.DataContext = upIntros;
             Teams.Items.Filter = FilterTeams;
             Intros.Items.Filter = FilterIntros;
             isPlaying = false;
+            this.Resources.Add(SystemColors.ControlBrushKey, SystemColors.HighlightBrush);
+            //this.Resources.Add(SystemColors.ControlTextBrushKey, SystemColors.HighlightTextBrush);
         }
 
         private bool FilterTeams(object item)
@@ -77,6 +85,54 @@ namespace UpwardsIntroductionSoundMixer
                 playingItem = this.Queue.SelectedIndex;
                 this.Play();
             }
+        }
+
+
+        private void PlayStopOtherButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (otherMusicPlaying)
+            {
+                OtherMusic.Pause();
+                otherMusicPlaying = false;
+                timer2 = new DispatcherTimer();
+                timer2.Interval = TimeSpan.FromSeconds(10);
+                timer2.Tick += (o, ev) =>
+                {
+                    OtherMusic.Stop();
+                    otherMusicPlayingItem++;
+                    if (otherMusicPlayingItem >= this.upIntros.OtherMusic.Count)
+                        otherMusicPlayingItem = 0;
+                    OtherMusic.Source = new Uri(this.upIntros.OtherMusic[otherMusicPlayingItem].FilePath);
+                    timer2.Stop();
+                };
+                timer2.Start();
+            }
+            else
+            {
+                if (timer2 != null)
+                {
+                    timer2.Stop();
+                }
+
+                if (upIntros.OtherMusic.Count <= 0)
+                    return;
+
+                if (OtherMusic.Source == null)
+                {
+                    OtherMusic.Source = new Uri(this.upIntros.OtherMusic[otherMusicPlayingItem].FilePath);
+                }
+
+                OtherMusic.Play();
+                otherMusicPlaying = true;
+            }
+        }
+
+        private void OtherMusic_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            otherMusicPlayingItem++;
+            if (otherMusicPlayingItem >= this.upIntros.OtherMusic.Count)
+                otherMusicPlayingItem = 0;
+            OtherMusic.Source = new Uri(this.upIntros.OtherMusic[otherMusicPlayingItem].FilePath);
         }
 
         private void Play()
@@ -136,6 +192,8 @@ namespace UpwardsIntroductionSoundMixer
         {
             this.upIntros.Queue.Add(new Tuple<TeamIntroduction, IntroductionMusic>(Teams.SelectedItem as TeamIntroduction, Intros.SelectedItem as IntroductionMusic));
             this.Queue.Items.Refresh();
+            if (this.upIntros.Queue.Count == 1)
+                this.Queue.SelectedIndex = 0;
         }
 
         private void TextBox_KeyUp(object sender, KeyEventArgs e)

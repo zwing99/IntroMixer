@@ -34,6 +34,14 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
         public List<IntroductionMusic> IntroductionMusics { get; set; }
 
         /// <summary>
+        /// Gets or sets the other music.
+        /// </summary>
+        /// <value>
+        /// The other music.
+        /// </value>
+        public List<IntroductionMusic> OtherMusic { get; set; }
+
+        /// <summary>
         /// Gets or sets the queue.
         /// </summary>
         /// <value>
@@ -50,24 +58,46 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
             UpwardIntroductions upIntros = new UpwardIntroductions();
             upIntros.TeamIntroductions = new List<TeamIntroduction>();
             upIntros.IntroductionMusics = new List<IntroductionMusic>();
+            upIntros.OtherMusic = new List<IntroductionMusic>();
             upIntros.Queue = new List<Tuple<TeamIntroduction, IntroductionMusic>>();
 
             string[] teams = Directory.GetFiles("c:\\upwardintros\\teams\\");
             teams = teams.OrderBy(t => t.ToString()).ToArray();
             foreach (string team in teams)
             {
-                string name = Path.GetFileNameWithoutExtension(team);
-                string[] splitname = name.Split('-');
-                upIntros.TeamIntroductions.Add(new TeamIntroduction() { FilePath = team, TeamName = splitname[0].Trim(), Coach = splitname[1].Trim(), Name = name });
+                if (Path.GetExtension(team).Length == 4)
+                {
+                    string name = Path.GetFileNameWithoutExtension(team);
+                    string[] splitname = name.Split('-');
+                    if (!name.StartsWith("."))
+                        upIntros.TeamIntroductions.Add(new TeamIntroduction() { FilePath = team, TeamName = splitname[0].Trim(), Coach = splitname[1].Trim(), Name = name });
+                }
             }
 
             string[] musics = Directory.GetFiles("c:\\upwardintros\\intromusic\\");
             musics = musics.OrderBy(m => m.ToString()).ToArray();
             foreach (string music in musics)
             {
-                string name = Path.GetFileNameWithoutExtension(music);
-                upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                if (Path.GetExtension(music).Length == 4)
+                {
+                    string name = Path.GetFileNameWithoutExtension(music);
+                    if (!name.StartsWith("."))
+                        upIntros.IntroductionMusics.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                }
             }
+
+            string[] others = Directory.GetFiles("c:\\upwardintros\\othermusic\\");
+            foreach (string music in others)
+            {
+                if (Path.GetExtension(music).Length == 4)
+                {
+                    string name = Path.GetFileNameWithoutExtension(music);
+                    if (!name.StartsWith("."))
+                        upIntros.OtherMusic.Add(new IntroductionMusic() { FilePath = music, Name = name });
+                }
+            }
+
+            upIntros.OtherMusic.Shuffle();
 
             return upIntros;
         }

@@ -64,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\MixerValueConverter.cs" />
+    <Compile Include="DataClasses\ShuffleExtension.cs" />
     <Compile Include="DataClasses\IntroductionMusic.cs" />
     <Compile Include="DataClasses\SoundFileBase.cs" />
     <Compile Include="DataClasses\TeamIntroduction.cs" />
