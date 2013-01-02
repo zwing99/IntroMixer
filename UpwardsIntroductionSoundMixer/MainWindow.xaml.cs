@@ -167,7 +167,7 @@ namespace UpwardsIntroductionSoundMixer
                 this.OtherMusic.Pause();
                 this.otherMusicPlaying = false;
                 this.otherMusicTimer = new DispatcherTimer();
-                this.otherMusicTimer.Interval = TimeSpan.FromSeconds(10);
+                this.otherMusicTimer.Interval = TimeSpan.FromSeconds(5);
                 this.otherMusicTimer.Tick += (o, ev) =>
                 {
                     this.OtherMusic.Stop();
