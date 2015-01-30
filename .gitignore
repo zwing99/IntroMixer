@@ -1,0 +1,9 @@
+
+
+#folders
+bin
+obj
+
+#types
+*.pdb
+*.suo
