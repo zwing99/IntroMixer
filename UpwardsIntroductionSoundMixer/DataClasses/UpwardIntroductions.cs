@@ -62,7 +62,7 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
             upwardIntros.OtherMusic = new List<IntroductionMusic>();
             upwardIntros.Queue = new List<Tuple<TeamIntroduction, IntroductionMusic>>();
 
-            string[] teams = Directory.GetFiles("c:\\upwardintros\\teams\\");
+            string[] teams = Directory.GetFiles(Properties.Settings.Default.teams_folder);
             teams = teams.OrderBy(t => t.ToString()).ToArray();
             foreach (string team in teams)
             {
@@ -77,7 +77,7 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
                 }
             }
 
-            string[] musics = Directory.GetFiles("c:\\upwardintros\\intromusic\\");
+            string[] musics = Directory.GetFiles(Properties.Settings.Default.intromusic_folder);
             musics = musics.OrderBy(m => m.ToString()).ToArray();
             foreach (string music in musics)
             {
@@ -91,7 +91,7 @@ namespace UpwardsIntroductionSoundMixer.DataClasses
                 }
             }
 
-            string[] others = Directory.GetFiles("c:\\upwardintros\\othermusic\\");
+            string[] others = Directory.GetFiles(Properties.Settings.Default.othermusic_folder);
             foreach (string music in others)
             {
                 if (Path.GetExtension(music).Length == 4)

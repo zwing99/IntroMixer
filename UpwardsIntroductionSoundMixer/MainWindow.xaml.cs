@@ -232,7 +232,7 @@ namespace UpwardsIntroductionSoundMixer
             this.IntrosMedia.Source = new Uri(this.upwardIntros.Queue[this.playingIndex].Item2.FilePath);
             this.IntrosMedia.Play();
             this.delayTimer = new DispatcherTimer();
-            this.delayTimer.Interval = TimeSpan.FromSeconds(2);
+            this.delayTimer.Interval = TimeSpan.FromSeconds(Properties.Settings.Default.introdelaytime);
             this.delayTimer.Tick += (o, ev) =>
             {
                 this.TeamsMedia.Play();
